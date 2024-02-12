@@ -1,0 +1,275 @@
+Purdue University Global
+IN400 - AI: Deep Learning and Machine Learning
+Unit 2 Assignment Part 2 / Module 2 Competency Assessment Part 1
+Exploring Machine Learning Tools With Spark
+Jupyter Notebook Code
+fel]
+KEKRKEKKKKEKKKEKEK EKER
+EKER
+ERE REE RK RKEKER EERE ERK KEEEKER REE
+ERE ERE ERE KEKE EKER
+# Import the applicable libraries and set the default parameters.
+# If the libraries do not exist, they must be installed in the Python environment.
+# NOTE: Ignore any "illegal
+import pandas as pd
+from future
+reflective access operation" warnings
+import print
+function
+from pyspark import SparkContext
+from pyspark.mllib.recommendation import ALS, MatrixFactorizationModel, Rating
+from pandas import read _
+csv
+from pyspark.sql.functions import col
+from pyspark.ml import Pipeline
+from pyspark.ml.feature import VectorAssembler
+from pyspark.ml.regression import LinearRegression
+from pyspark.ml.regression import LinearRegression
+from pyspark.ml.evaluation import RegressionEvaluator
+from pyspark.shell import spark
+# Data File Location
+dataFile = '/home/codio/workspace/data/IN400/Assignment2
+#
+[2]
+REKEKKREEEKERKEKEKEEKKEEERKEREREE
+KER KEE
+REREREE
+KER ER
+EEK
+EKER
+ER
+ER
+KR KERR REREREKREKKKKEKKEKKKKKKRKRER
+housingdata.csv'
+EEKR ERE
+ER
+EEREEKRKRERER
+REE
+ER
+EKRREREEKEKRREEREREREEKEKEERERKEKRKEKEEKEEE
+# Load the data from the CSV data file
+data = spark.read.csv(dataFile, header="true", inferSchema="true")
+#
+[3]
+KRRKEKKEKEKEKEKEKKEEKEKEKEKEKRKREKREE KEKE KEEKRE
+KEKE
+RK
+KEE
+KEKE
+EKER
+KKK
+KEKE EEREKREKEEEKRKE
+EKER
+EKKREKEKEKEKRKEEKEEKKRKEKEKKRKKKKKRKKRKRKRKEKREE
+# Peek at the data by showing the firt
+data.show(5)
+#
+[4]
+KREKKEKEKEEKEKEEKREEKEKERKE
+EKER
+KEE
+KE
+5 rows
+EKEEKE KEKE KE
+REE
+KEKE
+KEKE
+REE
+KEE KEE
+# Clean the data where any NA
+is present and replace blanks
+data = data.dropna()
+exprs = [col(column) .alias(column.replace(' ',
+data.show(5)
+' | ')) for column in data.columns]
+EERE
+REE
+EERE
+KEEEKERKEKEEKEKRE REE
+KRKRKEEEKKKRKEKKKRKKKKKRKKRKKKKREE
++ HOHOHOH OHOH OH OHOH OHOH
+
+#
+[5]
+KRREKRKERERKEREEKEEEKEEE
+ERE
+RRR
+EREREE
+EERE
+ERE
+REE
+EERERERE
+REE
+ER
+ER
+ER
+EKER
+EKER
+EERE
+KER
+EERERERERKEE
+ERE
+ERE
+ERE
+REKEKEKEKEEE
+# Prepare and show data for ML algorithm
+vdata = data.select (*exprs) .selectExpr("2018
+Populationestimate as population", "2019median
+stages = []
+assembler = VectorAssembler (inputCols=["population"], outputCol="features")
+stages += [assembler]
+pipeline = Pipeline(stages=stages)
+pipelineModel = pipeline.fit
+(vdata)
+dataset = pipelineModel.transform(vdata)
+dataset.show(5)
+#
+[6]
+KRREKKEKRKERKEKRKEEEER KERR ER
+ERR
+REREREK
+KEKE KKR ERE
+EEE
+RERERERERER
+ER
+ER
+ER
+ER ERE REREREKR
+EKER
+EER
+ERE
+EREREREK
+KER EREREREREKRKEKRKEKRKKEKEKEEK
+# Keep the required columns: input or features, and output or class aka label
+selectedcols = ["features", "label"]
+#
+[7]
+KRREKKEKRKEKRKEKRKEKEEKEKR KERR ERR
+EKER EREKR
+ERK
+KEKE
+KERR
+EERE
+REKRKE KER
+ER
+ER
+ERE
+EERE
+EKER
+KKK
+KEKE EERE
+# Display the data for Linear Regression algorithm
+print
+KRERKERKEKRER ER
+EREREKRKRKREKKKKKEKKEEE
+salesprice
+as label")
+)
+("DataFrame Columns Type: " + str(dataset.select(selectedcols))
+print ()
+print("SAMPLE DATA")
+dataset.select (selectedcols) .show(10)
+# [8]
+KRREKEKKEKEKEKEKEKEREKREKE ERE KEE KEKE
+KEE
+EKERER ERK ER ERE KERR KEKE RE KEE EERE EKER
+# Define the Linear Regression algorithm
+lr = LinearRegression()
+#
+[9]
+KRREEKKEKKEKKEKEKEKEKEKEKEKER ERE
+ER
+ER
+ERE
+EKER
+EK
+EKER
+REE
+KEKE
+KEKE
+KKK
+KEKE
+KEE KEK KEKE KEK
+Fit 1st model using a regularization parameter
+modelOne =
+#
+lr.fit(dataset, {lr.regParam: 0.0})
+#
+[10]
+KRREKKKEKEEKEKEKEKRKERKERKEEKRKEKEKEKEKEKRE KEKE ER
+# Fit 2nd model using a
+ERE
+ER
+ERKEKRE REE
+RKE REE
+KEK KEKE
+KEKE
+KREK KEKE
+different regularization parameter
+modelTwo = 1lr.fit(dataset, {lr.regParam: 100.0})
+#
+[11]
+KRREKRKEKKEKRKERKERKEKRKEEKEKEEKREKREKREEEKRE KERR
+ERE
+ERE
+EERE
+EERKEREKRKERERERKEREKEREKEKREKREKREREKREEREREEREKRREREREREKRERKEKEKEKEEKRKEKRKEKKEKEKEEEK
+# Make predictions for lst model and display results
+predictionsOne = modelOne. transform (dataset)
+predictionsOne.
+show()
+#
+[12]
+KRRERKEKRKEEKEEKERKERKEREKEKEKEEEKREKRERE KERR
+ERE
+EREEREREKEEEREREERERERERKERERER
+ER
+EERE
+KEE RRR
+EKRERREEERREKREREREREKRERERERKEKEKEKEKEKKEEE
+KE
+KEKRKEERKEEKEEKEEKEEKEEKEERKEKRKEKRKEKRKEKRKKRKKKKKKKKKEKE
+EKER
+EERE
+KEKE
+KEKEKEKEKEKEKKEKEKEKRKEKRKERKEKKKRKRRKRKRKRRREEE
+EKEREE EKE
+EEE EERE EEE
+REREREKEKEEKEREKEKEKREKEKEKKEKEEE
+# Evaluate 1st model and display results
+evaluator = RegressionEvaluator (metricName="rmse")
+RMSE = evaluator.evaluate (predictionsOne)
+print ("First
+Model: Root Mean Squared Error = " + str(RMSE))
+
+# [13]
+KRREKEKKKKEKEKKEKRKEKEKEKERKEKREK KEKE EKREKKEEREKE RE KEE
+EERE
+EKER EKREKEREKR EE KEKE REE
+# Make predictions for 2nd model and display results
+predictionsTwo = modelTwo.transform (dataset)
+predictionsTwo.
+show()
+#
+[14]
+RRR
+ERERKERKEEKEEKEEEEREK
+EERE
+REE
+EKER
+REKRKERERKEKREKRKEK KEK KEKE KEK KEKE EKER
+KEE ERE
+KER ERE
+KER EREREREREKEEEEKEERERERERERKERKEKRKRREE
+EERE ER ER EERE
+EKEREKREREKREKREEKEKEKEKERKEKRKERKEEE
+# Evaluate 2nd model and display results
+evaluator = RegressionEvaluator (metricName="rmse")
+RMSE = evaluator.
+evaluate(predictionsTwo)
+print ("Second Model: Root Mean Squared Error = " + str(RMSE))
+# KRREKEKEKKEEKEKERKEKERE REE EEK ERE EE ERE ERE
+RE EEE KEKE
+KEK ER ERE KER ER EKER EERE REEEERE ERE REE EERE KEE
+EERE
+KEKE EKEKKEKEKKKRKRRKEEK
